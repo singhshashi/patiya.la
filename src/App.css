@@ -11,7 +11,11 @@
 .multipPlayerGameContainer{
   margin: 0 auto;
   margin-top: 50px;
-  width: 400px;
+  width: 600px;
+}
+
+.singlePlayerGame{
+  margin-top: 50px;
 }
 .attempt-success {
   margin: 0 auto;

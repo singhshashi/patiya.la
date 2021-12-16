@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
 import Attempts from './Attempts';
 import { Stack, PrimaryButton, MaskedTextField } from '@fluentui/react';
+import { Text } from '@fluentui/react';
 
-function PlayerGame(attemptsFromServer, secretFromServer, submitAttempt, playerName) {
+function PlayerGame(props) {
+    console.log(props);
+    const game = props.game;
+    const submitGuess = props.submitGuess;
 
-    const [ secret] = useState(secretFromServer);
+    const gameStarted = game.playerOne && game.playerTwo;
+
     const [currentAttempt, setCurrentAttempt] = useState('');
     const [ submitButtonEnabled, setSubmitButtonEnabled ] = useState(false);
 
+    const attemptsFromServer = props.isPlayerOne ? game.playerOneAttempts : game.playerTwoAttempts;
+    console.log(props.playerName);
+
+    const showSubmit = (props.playerName === game.playerOne && props.isPlayerOne) || (props.playerName === game.playerTwo && !props.isPlayerOne);
+
     return (
         <div className="singlePlayerGame">
-            <p>{secret}</p>
-            <Attempts attempts={attemptsFromServer} secret={secret} />
-            <Stack horizontal horizontalAlign="center">
+            
+            <Attempts attempts={attemptsFromServer} secret={game.secret} />
+            {!gameStarted && (
+                <Text as="p">Waiting... </Text>
+            )}
+            {gameStarted && showSubmit && (<Stack horizontal horizontalAlign="center" styles={{root: {marginTop: '15px'}}}>
                 <Stack.Item>
             <MaskedTextField 
                 mask="9 9 9 9" 
@@ -34,11 +47,12 @@ function PlayerGame(attemptsFromServer, secretFromServer, submitAttempt, playerN
                 </Stack.Item>
             <Stack.Item>
             <PrimaryButton text="Submit" onClick={() => {
-                submitAttempt(currentAttempt, playerName);
-                setSubmitButtonEnabled(false);
+                submitGuess(currentAttempt, props.playerName);
+                setCurrentAttempt('');
+                // setSubmitButtonEnabled(false);
             } } disabled={!submitButtonEnabled}  />
             </Stack.Item>
-            </Stack>
+            </Stack>)}
         </div>
 
     )

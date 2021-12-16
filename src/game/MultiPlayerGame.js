@@ -14,9 +14,12 @@ function MultiPlayerGame() {
    
     const [name, setName] = useState(getRandomName());
     const [game, setGame] = useState(null);
+    const [connectionId] = useState(Math.random().toString(36).substring(7));
     
 
     const socket = useRef();
+
+    console.log("name: ", name);
 
     useEffect(() => {
         const initalizedSocket = socketIOClient("http://localhost:3001", {transports: ['websocket']});
@@ -37,9 +40,17 @@ function MultiPlayerGame() {
         socket.current.on('playerjoined', (data) => {
             setGame(data.game);
         });
+        socket.current.on('guessSubmitted', (data) => {
+            setGame(data.game);
+        });
     }
-    } , [game, name, socket]);
+    } , [game,socket]);
 
+    const submitGuess = (guess, playerName) => {
+        socket.current.emit('submitGuess', {gameId:game.id, guess: guess, playerName: playerName});
+    }
+
+    console.log("MutliPlayerGame", game);
     return (<div className="multipPlayerGameContainer">
         <Text as="h4" variant="xLarge" block>MutliPlayer Game</Text>
         {!game && (<Stack horizontal horizontalAlign="space-around" verticalAlign="end">
@@ -47,19 +58,19 @@ function MultiPlayerGame() {
                 <TextField label="Player Name" value={name} onChange={(e,v) => setName(v)}/>
             </Stack.Item>
             <Stack.Item>
-                <DefaultButton text="Join" onClick={() => { socket.current.emit('joingame', {playerName: name}); }}/>
+                <DefaultButton text="Join" onClick={() => { socket.current.emit('joingame', {playerName: name, connectionId: connectionId }); }}/>
             </Stack.Item>
         </Stack>)}
         {game && (<div className="gameContainer">
-        <Text as="p" variant="medium" block>Game ID: {game.gameId} (Share this with second player)</Text>
-        <Stack horizontal horizontalAlign="space-between" verticalAlign="start">
-            <Stack.Item>
-                Player One
-                <PlayerGame game={game} playerName={name} playerOne={true} />
+        <Text as="p" variant="medium" block>Game ID: {game.id} </Text>
+        <Stack horizontal horizontalAlign="start" verticalAlign="start" styles={{root:{marginTop: '50px'}}}>
+            <Stack.Item styles={{root: {width:'48%'}}}>
+                <Text as="p" block> Player One ({game.playerOne ? game.playerOne : 'Waiting for player to join..'})</Text>
+                <PlayerGame game={game} playerName={name} isPlayerOne={true} submitGuess={submitGuess} />
             </Stack.Item>
-            <Stack.Item>
-                Player Two
-                <PlayerGame game={game} playerName={name} playerOne={false} />
+            <Stack.Item styles={{root:{width:'48%'}}}>
+                <Text as="p" block>Player Two ({game.playerTwo ? game.playerTwo : 'Waiting for player to join..'})</Text>
+                <PlayerGame game={game} playerName={name} isPlayerOne={false} submitGuess={submitGuess} />
             </Stack.Item>
         </Stack>
         </div>)

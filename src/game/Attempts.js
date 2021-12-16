@@ -12,8 +12,10 @@ function Attempts(props) {
         for (let i = 0; i < secretString.length; i++) {
             if (secretString[i] === attempt[i]) {
                 bulls++;
-            } else if (secretString.includes(attempt[i])) {
-                cows++;
+            } else  {
+                if (secretString.indexOf(attempt[i]) !== -1 && secretString[i] !== attempt[i]) {
+                    cows++;
+                }
             }
         }
         return `${bulls}B ${cows}C`;

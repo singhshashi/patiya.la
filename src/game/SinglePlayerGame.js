@@ -11,7 +11,7 @@ function SinglePlayerGame() {
 
     return (
         <div className="singlePlayerGame">
-            <p>{secret}</p>
+            <p>X X X X</p>
             <Attempts attempts={attempts} secret={secret} />
             <Stack horizontal horizontalAlign="center">
                 <Stack.Item>

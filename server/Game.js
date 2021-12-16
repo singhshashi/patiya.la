@@ -1,12 +1,14 @@
  
  class Game {
-    constructor(playerOne) {
+    constructor(playerOne, connectionId) {
         this.playerOne = playerOne; 
+        this.playerOneConnectionId = connectionId;
         this.playerTwo = null;
+        this.playerTwoConnectionId = null;
         this.secret = this.generateSecret();
         this.playerOneAttempts = [];
         this.playerTwoAttempts = [];
-        this.gameId = new Date().getTime(); 
+        this.id = new Date().getTime(); 
         this.gameOver = false;
         this.winner = null;
     }
@@ -20,11 +22,13 @@
         return this.playerOne && this.playerTwo;
     }
 
-    joinPlayer(playerTwo) {
+    joinPlayer(playerTwo, connectionId) {
         this.playerTwo = playerTwo;
+        this.playerTwoConnectionId = connectionId;
     }
 
     submitGuess(guess, player) {
+        console.log("Submitting guess");
         if (player === this.playerOne) {
         this.playerOneAttempts.push(guess);
         this.checkForWinner(guess, this.playerOne);
@@ -35,6 +39,8 @@
     }
 
     checkForWinner(guess, player) {
+        console.log("Checking for winner");
+        console.log(this);
         if (!this.gameOver) {
             if (guess === this.secret) {
                 this.gameOver = true;
@@ -49,13 +55,16 @@
 
     getGame() {
         return {
-            gameId: this.gameId,
+            id: this.id,
             playerOne: this.playerOne,
+            playerOneConnectionId: this.playerOneConnectionId,
             playerTwo: this.playerTwo,
+            playerTwoConnectionId: this.playerTwoConnectionId,
             secret: this.secret,
             playerOneAttempts: this.playerOneAttempts,
             playerTwoAttempts: this.playerTwoAttempts,
             gameOver: this.gameOver,
+            gameStarted: this.gameStarted(),
             winner: this.winner
         }
     }
