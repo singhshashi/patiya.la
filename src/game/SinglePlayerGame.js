@@ -1,19 +1,38 @@
 import { useState } from 'react';
 import { MaskedTextField } from '@fluentui/react/lib/TextField';
-import { PrimaryButton } from '@fluentui/react';
+import { DefaultButton, PrimaryButton } from '@fluentui/react';
 import { Stack } from '@fluentui/react/lib/Stack';
 import Attempts from './Attempts';
 function SinglePlayerGame() {
-    const [ secret] = useState(Math.floor(1000 + Math.random() * 9000));
+    const getSecret = () => {
+        return Math.floor(1000 + Math.random() * 9000);
+    }
+
+    const [ secret , setSecret ] = useState(getSecret());
     const [attempts, setAttempts] = useState([]);
     const [currentAttempt, setCurrentAttempt] = useState('');
     const [ submitButtonEnabled, setSubmitButtonEnabled ] = useState(false);
+    const [gameOver , setGameOver] = useState(false);
+    const [timeRemaining, setTimeRemaining] = useState(60);
+    const [  gameWon, setGameWon ] = useState(false);
 
+    const checkAttempt = (attempt)  => {
+        attempt = attempt.replace(/ /g, '');
+        if (attempt === secret.toString()) {
+           console.log("You Won"); 
+            setGameOver(true);
+            setGameWon(true);
+        }
+    }
+
+
+
+    const questionString = gameOver ? secret : 'X X X X';
     return (
         <div className="singlePlayerGame">
-            <p>X X X X</p>
+            <p>{questionString}</p>
             <Attempts attempts={attempts} secret={secret} />
-            <Stack horizontal horizontalAlign="center">
+            {!gameOver && (<Stack horizontal horizontalAlign="center" styles={{root:{marginTop:'20px'}}}>
                 <Stack.Item>
             <MaskedTextField 
                 mask="9 9 9 9" 
@@ -37,11 +56,24 @@ function SinglePlayerGame() {
             <PrimaryButton text="Submit" onClick={() => {
                 attempts.push(currentAttempt);
                 setAttempts(attempts);  
+                checkAttempt(currentAttempt);
                 setCurrentAttempt('');
                 setSubmitButtonEnabled(false);
             } } disabled={!submitButtonEnabled}  />
             </Stack.Item>
-            </Stack>
+            </Stack>)}
+            {gameOver && (<div className="gameOver">
+                {gameWon ? (<p>You Won!</p>) : (<p>You Lost!</p>)}
+                <DefaultButton text="Play Again" onClick={() => {
+                    setGameWon(false);
+                    setGameOver(false);
+                    setTimeRemaining(60);
+                    setAttempts([]);
+                    setCurrentAttempt('');
+                    setSubmitButtonEnabled(false);
+                    setSecret(getSecret());
+                } } />
+                </div>)}
         </div>
 
     )

@@ -5,8 +5,8 @@ function Attempts(props) {
     const getCowsAndBullsString = (attempt) => {
         attempt = attempt.replace(/ /g, '');
         const secretString = secret.toString();
-        console.log('getCowsAndBullsString.attempt', attempt);
-        console.log('getCowsAndBullsString.secret', secretString);
+        // console.log('getCowsAndBullsString.attempt', attempt);
+        // console.log('getCowsAndBullsString.secret', secretString);
         let cows = 0;
         let bulls = 0;
         for (let i = 0; i < secretString.length; i++) {
