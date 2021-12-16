@@ -54,6 +54,9 @@ io.on('connection', (socket) => {
             io.emit('gamenotfound', { gameId: data.gameId });
         } 
      });
+     socket.on('playagain', (data) => {
+
+     })
 });
 
 

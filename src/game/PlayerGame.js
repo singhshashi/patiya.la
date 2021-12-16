@@ -25,7 +25,7 @@ function PlayerGame(props) {
             {!gameStarted && (
                 <Text as="p">Waiting... </Text>
             )}
-            {gameStarted && showSubmit && (<Stack horizontal horizontalAlign="center" styles={{root: {marginTop: '15px'}}}>
+            {gameStarted &&  !game.gameOver && showSubmit && (<Stack horizontal horizontalAlign="center" styles={{root: {marginTop: '15px'}}}>
                 <Stack.Item>
             <MaskedTextField 
                 mask="9 9 9 9" 

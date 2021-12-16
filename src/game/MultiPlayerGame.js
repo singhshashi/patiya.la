@@ -23,6 +23,7 @@ function MultiPlayerGame() {
 
     useEffect(() => {
         const initalizedSocket = socketIOClient("http://live.patiya.la", {transports: ['websocket']});
+        // const initalizedSocket = socketIOClient("http://127.0.0.1:3001", {transports: ['websocket']});
         socket.current = initalizedSocket;
         return () => {
             const currentSocket = socket.current;
@@ -73,6 +74,12 @@ function MultiPlayerGame() {
                 <PlayerGame game={game} playerName={name} isPlayerOne={false} submitGuess={submitGuess} />
             </Stack.Item>
         </Stack>
+        {game.gameOver && (
+            <div>
+                <Text as="p" block>Game Over! Winner is {game.winner}</Text>
+                <DefaultButton text="Play Again" onClick={() => { alert("This feature is currently unavailable! Someone has to meet the developer for tea before this gets built!") }}/>
+                </div>
+        )}
         </div>)
         }
 

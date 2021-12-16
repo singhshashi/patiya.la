@@ -41,8 +41,9 @@
     checkForWinner(guess, player) {
         console.log("Checking for winner");
         console.log(this);
+        guess = guess.replace(/ /g, '');
         if (!this.gameOver) {
-            if (guess === this.secret) {
+            if (guess === this.secret.toString()) {
                 this.gameOver = true;
                 this.winner = player;
             }
