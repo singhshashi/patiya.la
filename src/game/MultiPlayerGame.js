@@ -22,7 +22,7 @@ function MultiPlayerGame() {
     console.log("name: ", name);
 
     useEffect(() => {
-        const initalizedSocket = socketIOClient("http://localhost:3001", {transports: ['websocket']});
+        const initalizedSocket = socketIOClient("http://live.patiya.la", {transports: ['websocket']});
         socket.current = initalizedSocket;
         return () => {
             const currentSocket = socket.current;
