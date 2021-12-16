@@ -1,0 +1,22 @@
+{
+  "name" : "live",
+  "script" : "server/server.js",
+  "cwd" : ".",
+  "env": {
+    "PORT": 1337,
+    "NODE_PATH": "."
+  },
+  "watch": false,
+  "interpreter": "node",
+  "exec_mode": "cluster",
+  "instances": 1,
+  "instance_var": "INSTANCE_ID",
+  "max_memory_restart": "350M",
+  "out_file": "logs/live-stdout.log",
+  "error_file": "logs/live-stderr.log",
+  "combine_logs": true,
+  "max_restarts": 2000,
+  "restart_delay": 10000,
+  "autorestart": true
+}
+
