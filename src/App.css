@@ -1,9 +1,83 @@
+@font-face {
+  font-family: 'MooLahLah';
+  src: url('resources/MooLahLah-Regular.ttf');
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('resources/Poppins-Light.ttf');
+}
 .App {
   margin: 0 auto;
   text-align: center;
   max-width: 1024px;
+  font-family: Poppins;
 }
 
+.App-header {
+  margin: 0px auto;
+  margin-top: 50px;
+  font-family: MooLahLah;
+  font-size: 2.7em;
+  font-style: italic;
+  color: cadetblue;
+}
+
+.cows {
+  color: brown;
+}
+
+.bulls {
+  color: dimgray;
+}
+
+.video-game-button {
+	text-shadow: 1px 1px pink, -1px -1px maroon;
+
+	line-height: 1.5em;
+	text-align: center;
+	display: inline-block;
+	width: 1.5em;
+	-webkit-border-radius: .75em;
+	-moz-border-radius: .75em;
+	-o-border-radius: .75em;
+		border-radius: .75em;
+	background-color: red;
+	-webkit-box-shadow:  0 .2em maroon;
+	-moz-box-shadow:  0 .2em maroon;
+	-o-box-shadow:  0 .2em maroon;
+	box-shadow:  0 .2em maroon;
+	color: red;
+	margin: 5px;
+	background-color: red;
+	background-image: -o-linear-gradient(left top, pink 3%, red 22%, maroon 99%);
+	background-image: -moz-linear-gradient(left top, pink 3%, red 22%, maroon 99%);
+	background-image: -webkit-linear-gradient(left top, pink 3%, red 22%, maroon 99%);
+	background-image: linear-gradient(left top, pink 3%, red 22%, maroon 99%);
+	cursor: pointer;
+  padding-left: 5px;
+}
+.start-btn{
+    text-align: center;
+	display: inline-block;
+	margin:5px;
+    font-weight: bold;
+    padding: 20px 20px 20px 20px ;
+    background-color: brown;
+    text-shadow: -1px -1px brown, 1px 1px white;
+    color: whitesmoke;
+    -webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	-o-border-radius: 7px;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+
+}
+.video-game-button:active, .start-btn:active {
+	box-shadow: none;
+	position: relative;
+	top: .2em;
+}
 .gameModeSelectionContainer {
   margin: 0 auto;
   width: 400px;
@@ -11,7 +85,7 @@
 .multipPlayerGameContainer{
   margin: 0 auto;
   margin-top: 50px;
-  width: 600px;
+  width: 800px;
 }
 
 .singlePlayerGame{
@@ -33,4 +107,31 @@
   background-color: antiquewhite;
   border-radius: 5px;
   max-width: 400px;;
+}
+
+.questionString {
+  font-size: 1.5em;
+}
+
+.guess-input > input {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 5px;
+  text-align: center;
+  font-size: 18px;
+  appearance: textfield;
+}
+
+.guess-input > input::-webkit-outer-spin-button,
+.guess-input > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.attempt-word {
+  font-family: Poppins;
+  font-size: 1.5em;
+  letter-spacing: 3px;
 }

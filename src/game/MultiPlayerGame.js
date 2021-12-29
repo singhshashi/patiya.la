@@ -22,8 +22,8 @@ function MultiPlayerGame() {
     console.log("name: ", name);
 
     useEffect(() => {
-        const initalizedSocket = socketIOClient("http://live.patiya.la", {transports: ['websocket']});
-        // const initalizedSocket = socketIOClient("http://127.0.0.1:3001", {transports: ['websocket']});
+        // const initalizedSocket = socketIOClient("http://live.patiya.la", {transports: ['websocket']});
+        const initalizedSocket = socketIOClient("http://127.0.0.1:3001", {transports: ['websocket']});
         socket.current = initalizedSocket;
         return () => {
             const currentSocket = socket.current;
@@ -52,6 +52,7 @@ function MultiPlayerGame() {
     }
 
     console.log("MutliPlayerGame", game);
+    const gameSecretString = game && game.gameOver ? game.secret : "X X X X";
     return (<div className="multipPlayerGameContainer">
         <Text as="h4" variant="xLarge" block>MutliPlayer Game</Text>
         {!game && (<Stack horizontal horizontalAlign="space-around" verticalAlign="end">
@@ -64,7 +65,8 @@ function MultiPlayerGame() {
         </Stack>)}
         {game && (<div className="gameContainer">
         <Text as="p" variant="medium" block>Game ID: {game.id} </Text>
-        <Stack horizontal horizontalAlign="start" verticalAlign="start" styles={{root:{marginTop: '50px'}}}>
+        <Text as="p" variant="medium" block>{gameSecretString}</Text>
+        <Stack horizontal horizontalAlign="start" verticalAlign="start" tokens={{childrenGap: 25}} styles={{root:{marginTop: '50px'}}}>
             <Stack.Item styles={{root: {width:'48%'}}}>
                 <Text as="p" block> Player One ({game.playerOne ? game.playerOne : 'Waiting for player to join..'})</Text>
                 <PlayerGame game={game} playerName={name} isPlayerOne={true} submitGuess={submitGuess} />
